@@ -109,7 +109,7 @@ const XAxisValue = styled.div`
 `;
 
 const LowHighLine = styled.div`
-  width: 5px;
+  width: 3px;
   border-radius: 15px;
   position: absolute;
   bottom: ${({ positionb }) => `${positionb}px`};
@@ -120,6 +120,7 @@ const LowHighLine = styled.div`
     rgba(204, 193, 193, 1) 48%,
     rgba(177, 177, 177, 1) 74%
   );
+  opacity: 0.3;
 `;
 
 const OpenCloseBar = styled.div`
