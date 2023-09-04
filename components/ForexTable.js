@@ -109,22 +109,28 @@ const XAxisValue = styled.div`
 `;
 
 const LowHighLine = styled.div`
-  width: 2px;
+  width: 5px;
+  border-radius: 15px;
   position: absolute;
   bottom: ${({ positionb }) => `${positionb}px`};
   left: ${({ positionl }) => `${positionl}px`};
   height: ${({ lineheight }) => `${lineheight}px`};
-  background-color: white;
+  background: linear-gradient(
+    105deg,
+    rgba(204, 193, 193, 1) 48%,
+    rgba(177, 177, 177, 1) 74%
+  );
 `;
 
 const OpenCloseBar = styled.div`
   width: ${({ widthpixels }) => `${widthpixels}px`};
-  background-color: ${({ color }) => color};
+  background: ${({ color }) => color};
   position: absolute;
   bottom: ${({ positionb }) => `${positionb}px`};
   left: ${({ positionl }) => `${positionl}px`};
   height: ${({ barheight }) => `${barheight}px`};
-  opacity: 0.5;
+  opacity: 0.95;
+  border-radius: 3px;
 `;
 
 const ForexTable = () => {
@@ -139,10 +145,7 @@ const ForexTable = () => {
   const [lowest, setLowest] = useState(0);
   const [xAxisPointsDistance, setXAxisPointsDistance] = useState(0);
   const [graph, setGraph] = useState([]);
-  const [barInfo, setBarInfo] = useState({});
   const [selectedBar, setSelectedBar] = useState();
-
-  const ref = useRef(0);
 
   const convertText = () => {
     let arrayFromText = fileDoc.split(/\r?\n/);
@@ -164,7 +167,6 @@ const ForexTable = () => {
     setUsableData(dataObjects);
 
     let startingDate = dataObjects[0].date;
-
     let currentDate = startingDate;
     let low = 100000;
     let high = 0;
@@ -195,8 +197,6 @@ const ForexTable = () => {
 
     console.log("compilation", compilationArray);
     setCompilation(compilationArray);
-
-    //'///////
 
     let lowestPrice = 1000000;
     let highestPrice = 0;
@@ -233,11 +233,9 @@ const ForexTable = () => {
       } else {
         result = (close - open) / (lowHighDifference / 450);
       }
-
       return result;
     };
 
-    ////
     let graphElementsInPixelsArray = [];
 
     compilationArray.map((el, idx) => {
@@ -261,7 +259,6 @@ const ForexTable = () => {
     setXAxisPointsDistance(xAxisPointsDistanceInPixels);
 
     let xAxisPositions = [];
-
     let start = 0;
 
     for (let i = 0; i <= xAxisPointsNum; i++) {
@@ -364,11 +361,10 @@ const ForexTable = () => {
                   el.low / (lowHighDifferenceValue / 450) -
                   lowest / (lowHighDifferenceValue / 450)
                 }
-                positionl={xAxis[idx] + xAxisPointsDistance / 2}
+                positionl={xAxis[idx] + xAxisPointsDistance / 2 - 2}
                 lineheight={el.lowHighLineHeightPixels}
               />
               <OpenCloseBar
-                ref={ref}
                 widthpixels={xAxisPointsDistance}
                 onMouseEnter={() => {
                   setSelectedBar(compilation[idx]);
@@ -388,7 +384,11 @@ const ForexTable = () => {
                 barheight={
                   el.openCloseHeightPixels === 0 ? 1 : el.openCloseHeightPixels
                 }
-                color={el.open > el.close ? "red" : "lime"}
+                color={
+                  el.open > el.close
+                    ? "linear-gradient(105deg, rgba(170,15,41,1) 26%, rgba(173,57,18,1) 74%)"
+                    : "linear-gradient(105deg, rgba(115,180,73,1) 37%, rgba(118,222,82,1) 68%, rgba(71,241,82,1) 99%)"
+                }
               />
             </div>
           ))}
