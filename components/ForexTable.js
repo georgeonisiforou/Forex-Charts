@@ -36,7 +36,7 @@ const InfoSidebar = styled.div`
   height: fit-content;
   border-radius: 4px;
   font-size: 18px;
-  box-shadow: 0px 0px 25px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
 `;
 
 const Table = styled.div`
@@ -87,9 +87,11 @@ const FetchDataBtn = styled.button`
 `;
 
 const InputFile = styled.input`
-  width: 400px;
+  width: 420px;
+  padding: 8px;
   border-radius: 5px;
   border: 2px solid #000;
+  box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.4);
 
   &::file-selector-button {
     background-color: rgba(0, 0, 0, 0.7);
@@ -100,6 +102,9 @@ const InputFile = styled.input`
     cursor: pointer;
     font-size: 16px;
     font-family: "ADLaM Display", cursive;
+    margin-right: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
   }
 `;
 
