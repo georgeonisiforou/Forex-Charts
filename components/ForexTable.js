@@ -20,7 +20,6 @@ const Title = styled.h1`
 const Graph = styled.div`
   display: flex;
   gap: 16px;
-
   padding: 100px;
   justify-content: center;
   align-items: center;
@@ -146,8 +145,8 @@ const XAxisValue = styled.div`
   justify-content: space-between;
   position: absolute;
   left: ${({ positionl }) => `${positionl}px`};
-  bottom: -20px;
-  font-size: 9px;
+  bottom: -18px;
+  font-size: 7px;
 `;
 
 const LowHighLine = styled.div`
