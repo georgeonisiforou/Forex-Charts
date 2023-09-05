@@ -10,12 +10,17 @@ const Container = styled.div`
   align-items: center;
   padding: 64px;
   gap: 32px;
+  background-color: rgba(200, 150, 0, 0.2);
+`;
+
+const Title = styled.h1`
+  font-size: 48px;
 `;
 
 const Graph = styled.div`
   display: flex;
   gap: 16px;
-  background-color: rgba(240, 210, 0, 0.1);
+
   padding: 100px;
   justify-content: center;
   align-items: center;
@@ -25,12 +30,13 @@ const InfoSidebar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 200px;
+  width: 220px;
   border: 2px solid #000;
   padding: 1rem;
   height: fit-content;
   border-radius: 4px;
   font-size: 18px;
+  box-shadow: 0px 0px 25px 2px rgba(0, 0, 0, 0.3);
 `;
 
 const Table = styled.div`
@@ -47,13 +53,14 @@ const TableRow = styled.div`
 
   &:first-child {
     font-weight: 600;
-    border: 2px solid #000;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
   }
 `;
 
 const Cell = styled.div`
   flex: 1;
-  border: 1px solid #000;
+  border: 1px solid rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,14 +70,15 @@ const Cell = styled.div`
 const FetchDataBtn = styled.button`
   width: 150px;
   height: 50px;
-  background-color: #fff;
+  font-family: "ADLaM Display", cursive;
+  background-color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
   border-radius: 5px;
   border: 1px solid #000;
-  color: #000;
+  color: #fff;
   font-size: 16px;
-  font-weight: 600;
   transition: all 0.3s ease;
+  text-transform: uppercase;
 
   &:active {
     transform: translateY(2px);
@@ -79,8 +87,9 @@ const FetchDataBtn = styled.button`
 `;
 
 const InputFile = styled.input`
-  width: 350px;
+  width: 400px;
   border-radius: 5px;
+  border: 2px solid #000;
 
   &::file-selector-button {
     background-color: rgba(0, 0, 0, 0.7);
@@ -89,19 +98,19 @@ const InputFile = styled.input`
     height: 50px;
     width: 150px;
     cursor: pointer;
-    border-radius: 5px;
     font-size: 16px;
+    font-family: "ADLaM Display", cursive;
   }
 `;
 
 const GraphContainer = styled.div`
-  width: 1202px;
+  width: 1200px;
   height: 460px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(250, 250, 250, 0.8);
   position: relative;
-  border-bottom: 1px solid #000;
-  border-left: 1px solid #000;
   margin-bottom: 50px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.2) inset;
 `;
 
 const YAxisLine = styled.div`
@@ -132,7 +141,7 @@ const XAxisValue = styled.div`
   justify-content: space-between;
   position: absolute;
   left: ${({ positionl }) => `${positionl}px`};
-  bottom: -21px;
+  bottom: -20px;
   font-size: 9px;
 `;
 
@@ -148,7 +157,7 @@ const LowHighLine = styled.div`
     rgba(204, 193, 193, 1) 48%,
     rgba(177, 177, 177, 1) 74%
   );
-  opacity: 0.3;
+  opacity: 0.5;
 `;
 
 const OpenCloseBar = styled.div`
@@ -161,10 +170,11 @@ const OpenCloseBar = styled.div`
   opacity: 0.95;
   border-radius: 2px;
   transition: all 0.3s ease;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    scale: 1.04;
-    opacity: 0.6;
+    scale: 1.02;
+    opacity: 0.8;
   }
 `;
 
@@ -310,7 +320,7 @@ const ForexTable = () => {
     }
 
     let prettyValues = yAxisValues.map((val, _) => {
-      return val.toFixed(5);
+      return val.toFixed(4);
     });
 
     let chartDataDateAndClosingPrice = [];
@@ -340,7 +350,10 @@ const ForexTable = () => {
     let valuesAndPointsMap = [];
 
     for (let i = 0; i <= 11; i++) {
-      let obj = { value: prettyValues[i], pointPosition: yAxisPositions[i] };
+      let obj = {
+        value: prettyValues[i],
+        pointPosition: yAxisPositions[i],
+      };
       valuesAndPointsMap[i] = obj;
     }
 
@@ -371,6 +384,7 @@ const ForexTable = () => {
 
   return (
     <Container>
+      <Title>FOREX CHARTS</Title>
       <Graph>
         <GraphContainer>
           {pretty.map((el, idx) => (
@@ -429,14 +443,14 @@ const ForexTable = () => {
         </GraphContainer>
         <InfoSidebar>
           <p>
-            Date:
+            Date:{" "}
             {selectedBar &&
               new Date(selectedBar.date).toLocaleDateString("en-GB")}
           </p>
-          <p>Low:{selectedBar && selectedBar.low}</p>
-          <p>High:{selectedBar && selectedBar.high}</p>
-          <p>Open:{selectedBar && selectedBar.open}</p>
-          <p>Close:{selectedBar && selectedBar.close}</p>
+          <p>Low: {selectedBar && selectedBar.low}</p>
+          <p>High: {selectedBar && selectedBar.high}</p>
+          <p>Open: {selectedBar && selectedBar.open}</p>
+          <p>Close: {selectedBar && selectedBar.close}</p>
         </InfoSidebar>
       </Graph>
       <InputFile
