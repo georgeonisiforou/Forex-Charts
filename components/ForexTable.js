@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import { useState } from "react";
 
@@ -15,6 +15,10 @@ const Container = styled.div`
 const Graph = styled.div`
   display: flex;
   gap: 16px;
+  background-color: rgba(240, 210, 0, 0.1);
+  padding: 100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const InfoSidebar = styled.div`
@@ -22,6 +26,11 @@ const InfoSidebar = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 200px;
+  border: 2px solid #000;
+  padding: 1rem;
+  height: fit-content;
+  border-radius: 4px;
+  font-size: 18px;
 `;
 
 const Table = styled.div`
@@ -35,11 +44,16 @@ const TableRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &:first-child {
+    font-weight: 600;
+    border: 2px solid #000;
+  }
 `;
 
 const Cell = styled.div`
   flex: 1;
-  border: 1px solid black;
+  border: 1px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,37 +63,51 @@ const Cell = styled.div`
 const FetchDataBtn = styled.button`
   width: 150px;
   height: 50px;
-  background-color: aliceblue;
+  background-color: #fff;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-  color: blueviolet;
+  border: 1px solid #000;
+  color: #000;
   font-size: 16px;
   font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: translateY(2px);
+    background-color: #eff;
+  }
 `;
 
 const InputFile = styled.input`
-  border: 1px solid black;
   width: 350px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+
+  &::file-selector-button {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: #fff;
+    height: 50px;
+    width: 150px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
 `;
 
 const GraphContainer = styled.div`
-  width: 1200px;
-  height: 450px;
+  width: 1202px;
+  height: 460px;
   background-color: rgba(0, 0, 0, 0.8);
   position: relative;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
+  border-bottom: 1px solid #000;
+  border-left: 1px solid #000;
   margin-bottom: 50px;
 `;
 
 const YAxisLine = styled.div`
   width: 10px;
   height: 2px;
-  background-color: black;
+  background-color: #000;
 `;
 
 const YAxisValue = styled.div`
@@ -95,7 +123,7 @@ const YAxisValue = styled.div`
 const XAxisLine = styled.div`
   width: 2px;
   height: 10px;
-  background-color: black;
+  background-color: #000;
 `;
 
 const XAxisValue = styled.div`
@@ -109,7 +137,7 @@ const XAxisValue = styled.div`
 `;
 
 const LowHighLine = styled.div`
-  width: 3px;
+  width: 4px;
   border-radius: 15px;
   position: absolute;
   bottom: ${({ positionb }) => `${positionb}px`};
@@ -131,7 +159,13 @@ const OpenCloseBar = styled.div`
   left: ${({ positionl }) => `${positionl}px`};
   height: ${({ barheight }) => `${barheight}px`};
   opacity: 0.95;
-  border-radius: 3px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    scale: 1.04;
+    opacity: 0.6;
+  }
 `;
 
 const ForexTable = () => {
@@ -196,7 +230,6 @@ const ForexTable = () => {
       dayArray.push({ date: currentDate, low: low, high: high });
     });
 
-    console.log("compilation", compilationArray);
     setCompilation(compilationArray);
 
     let lowestPrice = 1000000;
@@ -395,7 +428,11 @@ const ForexTable = () => {
           ))}
         </GraphContainer>
         <InfoSidebar>
-          <p>Date:{selectedBar && selectedBar.date}</p>
+          <p>
+            Date:
+            {selectedBar &&
+              new Date(selectedBar.date).toLocaleDateString("en-GB")}
+          </p>
           <p>Low:{selectedBar && selectedBar.low}</p>
           <p>High:{selectedBar && selectedBar.high}</p>
           <p>Open:{selectedBar && selectedBar.open}</p>
