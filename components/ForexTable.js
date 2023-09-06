@@ -20,8 +20,8 @@ const Title = styled.h1`
 
 const Graph = styled.div`
   display: flex;
-  gap: 16px;
-  padding: 100px;
+  gap: 32px;
+  padding: 40px;
   justify-content: center;
   align-items: center;
 `;
@@ -113,8 +113,8 @@ const GraphContainer = styled.div`
   height: 460px;
   background-color: rgba(250, 250, 250, 0.8);
   position: relative;
-  margin-bottom: 50px;
-  border-radius: 5px;
+  margin-bottom: 30px;
+  border-radius: 3px;
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.2) inset;
 `;
 
