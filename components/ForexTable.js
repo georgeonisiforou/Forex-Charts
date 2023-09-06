@@ -15,6 +15,7 @@ const Container = styled.div`
 
 const Title = styled.h1`
   font-size: 48px;
+  font-family: "ADLaM Display", cursive;
 `;
 
 const Graph = styled.div`
@@ -35,7 +36,7 @@ const InfoSidebar = styled.div`
   height: fit-content;
   border-radius: 4px;
   font-size: 18px;
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 8px 3px rgba(40, 30, 35, 0.5);
 `;
 
 const Table = styled.div`
@@ -145,8 +146,8 @@ const XAxisValue = styled.div`
   justify-content: space-between;
   position: absolute;
   left: ${({ positionl }) => `${positionl}px`};
-  bottom: -18px;
-  font-size: 7px;
+  bottom: -22px;
+  font-size: 10px;
 `;
 
 const LowHighLine = styled.div`
@@ -162,6 +163,7 @@ const LowHighLine = styled.div`
     rgba(177, 177, 177, 1) 74%
   );
   opacity: 0.5;
+  box-shadow: 0px 0px 1px 1px rgba(40, 40, 30, 0.3) inset;
 `;
 
 const OpenCloseBar = styled.div`
@@ -174,7 +176,7 @@ const OpenCloseBar = styled.div`
   opacity: 0.95;
   border-radius: 2px;
   transition: all 0.3s ease;
-  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px 1px rgba(40, 40, 30, 0.3);
 
   &:hover {
     scale: 1.02;

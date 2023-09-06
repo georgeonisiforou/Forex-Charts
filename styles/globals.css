@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Anton&family=Gasoek+One&family=Kablammo&family=Lato:wght@400;700;900&family=Moirai+One&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Roboto+Condensed:wght@300;400;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -10,7 +10,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: "ADLaM Display", cursive;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 a {
