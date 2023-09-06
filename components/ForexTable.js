@@ -10,12 +10,13 @@ const Container = styled.div`
   align-items: center;
   padding: 64px;
   gap: 32px;
-  background-color: rgba(200, 150, 0, 0.2);
+  background-color: rgba(60, 100, 110, 0.1);
 `;
 
 const Title = styled.h1`
   font-size: 48px;
   font-family: "ADLaM Display", cursive;
+  color: rgba(0, 0, 0, 0.8);
 `;
 
 const Graph = styled.div`
@@ -23,7 +24,6 @@ const Graph = styled.div`
   gap: 32px;
   padding: 40px;
   justify-content: center;
-  align-items: center;
 `;
 
 const InfoSidebar = styled.div`
@@ -31,7 +31,7 @@ const InfoSidebar = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 220px;
-  border: 2px solid #000;
+  border: 2px solid rgba(40, 30, 35, 0.6);
   padding: 1rem;
   height: fit-content;
   border-radius: 4px;
