@@ -10,14 +10,14 @@ const Container = styled.div`
   align-items: center;
   padding: 64px;
   gap: 32px;
-  background-color: rgba(90, 100, 110, 0.9);
+  background-color: rgba(100, 110, 110, 0.45);
 `;
 
 const Title = styled.h1`
   font-size: 64px;
   font-family: "ADLaM Display", cursive;
   color: rgba(0, 0, 0, 0.9);
-  text-shadow: 0 0.15ch 15px rgba(0, 0, 0, 0.5),
+  text-shadow: 0 0.15ch 15px rgba(0, 0, 0, 0.4),
     0 -2px 0 rgba(255, 255, 255, 0.5);
 `;
 
@@ -39,7 +39,7 @@ const InfoSidebar = styled.div`
   border-radius: 4px;
   font-size: 18px;
   box-shadow: 0px 0px 15px 3px rgba(230, 230, 235, 0.4);
-  color: #fff;
+  color: #000;
 `;
 
 const Table = styled.div`
@@ -68,7 +68,6 @@ const Cell = styled.div`
   justify-content: center;
   align-items: center;
   height: 50px;
-  color: #fff;
 `;
 
 const FetchDataBtn = styled.button`
@@ -96,7 +95,7 @@ const InputFile = styled.input`
   border-radius: 5px;
   border: 2px solid #000;
   box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.4);
-  color: #fff;
+  color: #000;
 
   &::file-selector-button {
     background-color: rgba(0, 0, 0, 0.7);
@@ -126,7 +125,7 @@ const GraphContainer = styled.div`
 const YAxisLine = styled.div`
   width: 10px;
   height: 2px;
-  background-color: #fff;
+  background-color: #000;
 `;
 
 const YAxisValue = styled.div`
@@ -137,13 +136,13 @@ const YAxisValue = styled.div`
   position: absolute;
   left: -80px;
   bottom: ${({ positionb }) => `${positionb}px`};
-  color: #fff;
+  color: #000;
 `;
 
 const XAxisLine = styled.div`
   width: 2px;
   height: 10px;
-  background-color: #fff;
+  background-color: #000;
 `;
 
 const XAxisValue = styled.div`
@@ -153,8 +152,8 @@ const XAxisValue = styled.div`
   position: absolute;
   left: ${({ positionl }) => `${positionl}px`};
   bottom: -20px;
-  font-size: 8px;
-  color: #fff;
+  font-size: 9px;
+  color: #000;
 `;
 
 const LowHighLine = styled.div`
@@ -409,12 +408,13 @@ const ForexTable = () => {
               <YAxisLine />
             </YAxisValue>
           ))}
-          {xAxisV.map((el, idx) => (
-            <XAxisValue key={idx} positionl={xAxis[idx]}>
-              <XAxisLine />
-              {el.value}
-            </XAxisValue>
-          ))}
+          {xAxisV.length < 31 &&
+            xAxisV.map((el, idx) => (
+              <XAxisValue key={idx} positionl={xAxis[idx]}>
+                <XAxisLine />
+                {el.value}
+              </XAxisValue>
+            ))}
           {graph.map((el, idx) => (
             <div key={idx}>
               <LowHighLine
