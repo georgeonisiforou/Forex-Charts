@@ -5,11 +5,13 @@ const NotificationContext = React.createContext({
   notificationText: null,
   success: () => {},
   error: () => {},
+  info: () => {},
 });
 
 const STATES = {
   SUCCESS: "success",
   ERROR: "error",
+  INFO: "info",
 };
 
 const NotificationProvider = (props) => {
@@ -25,6 +27,11 @@ const NotificationProvider = (props) => {
     setNotificationText(text);
     setNotification(STATES.ERROR);
   };
+  const info = (text) => {
+    window.scroll(0, 0);
+    setNotificationText(text);
+    setNotification(STATES.INFO);
+  };
   const clear = () => {
     setNotificationText(null);
     setNotification(null);
@@ -34,6 +41,7 @@ const NotificationProvider = (props) => {
       value={{
         success,
         error,
+        info,
         clear,
         notification,
         notificationText,

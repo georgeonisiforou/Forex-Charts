@@ -1,7 +1,17 @@
 import React from "react";
 import { useContext } from "react";
 import NotificationContext from "@/components/NotificationProvider";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+`;
 
 const Container = styled.div`
   width: 200px;
@@ -14,6 +24,7 @@ const Container = styled.div`
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   color: white;
   transition: all 0.3s ease;
+  animation: ${slideIn} 1s ease-out;
 
   &.success {
     background-color: green;
@@ -21,6 +32,10 @@ const Container = styled.div`
 
   &.error {
     background-color: red;
+  }
+
+  &.info {
+    background-color: yellow;
   }
 `;
 

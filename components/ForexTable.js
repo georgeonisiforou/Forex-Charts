@@ -440,7 +440,7 @@ const ForexTable = () => {
     reader.onloadend = handleFileRead;
 
     reader.readAsText(file);
-    notificationCtx.success("Loading...");
+    notificationCtx.info("Loading...");
   };
   const headers = [
     "DATE",
