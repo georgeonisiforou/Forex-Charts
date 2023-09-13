@@ -1,6 +1,7 @@
 import React from "react";
-import { styled } from "styled-components";
-import { useState } from "react";
+import { ThemeProvider, styled } from "styled-components";
+import { useState, useContext } from "react";
+import NotificationContext from "@/components/NotificationProvider";
 
 const Container = styled.div`
   width: 100%;
@@ -10,13 +11,13 @@ const Container = styled.div`
   align-items: center;
   padding: 64px;
   gap: 32px;
-  background-color: rgba(100, 110, 110, 0.45);
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 const Title = styled.h1`
   font-size: 64px;
   font-family: "ADLaM Display", cursive;
-  color: rgba(0, 0, 0, 0.9);
+  color: ${({ theme }) => theme.textColor};
   text-shadow: 0 0.15ch 15px rgba(0, 0, 0, 0.4),
     0 -2px 0 rgba(255, 255, 255, 0.5);
 `;
@@ -33,13 +34,13 @@ const InfoSidebar = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 220px;
-  border: 2px solid rgba(230, 230, 235, 0.6);
+  border: 2px solid ${({ theme }) => theme.accentColor};
   padding: 1rem;
   height: fit-content;
   border-radius: 4px;
   font-size: 18px;
-  box-shadow: 0px 0px 15px 3px rgba(230, 230, 235, 0.4);
-  color: #000;
+  box-shadow: 0px 0px 15px 3px ${({ theme }) => theme.accentColor};
+  color: ${({ theme }) => theme.textColor};
 `;
 
 const Table = styled.div`
@@ -56,36 +57,37 @@ const TableRow = styled.div`
 
   &:first-child {
     font-weight: 600;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
+    background-color: ${({ theme }) => theme.accentColor};
+    color: ${({ theme }) => theme.textColor};
   }
 `;
 
 const Cell = styled.div`
   flex: 1;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid ${({ theme }) => theme.textColor};
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
+  color: ${({ theme }) => theme.textColor};
 `;
 
 const FetchDataBtn = styled.button`
   width: 150px;
   height: 50px;
   font-family: "ADLaM Display", cursive;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: ${({ theme }) => theme.accentColor};
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid #000;
-  color: #fff;
+  border: 1px solid ${({ theme }) => theme.textColor};
+  color: ${({ theme }) => theme.textColor};
   font-size: 16px;
   transition: all 0.3s ease;
   text-transform: uppercase;
 
   &:active {
     transform: translateY(2px);
-    background-color: #eff;
+    background-color: ${({ theme }) => theme.bgColor};
   }
 `;
 
@@ -93,14 +95,14 @@ const InputFile = styled.input`
   width: 420px;
   padding: 8px;
   border-radius: 5px;
-  border: 2px solid #000;
-  box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.4);
-  color: #000;
+  border: 2px solid ${({ theme }) => theme.accentColor};
+  box-shadow: inset 0px 0px 5px 1px ${({ theme }) => theme.accentColor};
+  color: ${({ theme }) => theme.textColor};
 
   &::file-selector-button {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: ${({ theme }) => theme.accentColor};
     border: none;
-    color: #fff;
+    color: ${({ theme }) => theme.textColor};
     height: 50px;
     width: 150px;
     cursor: pointer;
@@ -108,24 +110,24 @@ const InputFile = styled.input`
     font-family: "ADLaM Display", cursive;
     margin-right: 16px;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 5px 1px ${({ theme }) => theme.accentColor};
   }
 `;
 
 const GraphContainer = styled.div`
   width: 1200px;
   height: 460px;
-  background-color: rgba(250, 250, 250, 0.8);
+  background-color: ${({ theme }) => theme.textColor};
   position: relative;
   margin-bottom: 30px;
   border-radius: 3px;
-  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4) inset;
+  box-shadow: 0px 0px 5px 3px ${({ theme }) => theme.bgColor} inset;
 `;
 
 const YAxisLine = styled.div`
   width: 10px;
   height: 2px;
-  background-color: #000;
+  background-color: ${({ theme }) => theme.textColor};
 `;
 
 const YAxisValue = styled.div`
@@ -136,13 +138,13 @@ const YAxisValue = styled.div`
   position: absolute;
   left: -80px;
   bottom: ${({ positionb }) => `${positionb}px`};
-  color: #000;
+  color: ${({ theme }) => theme.textColor};
 `;
 
 const XAxisLine = styled.div`
   width: 2px;
   height: 10px;
-  background-color: #000;
+  background-color: ${({ theme }) => theme.textColor};
 `;
 
 const XAxisValue = styled.div`
@@ -153,7 +155,7 @@ const XAxisValue = styled.div`
   left: ${({ positionl }) => `${positionl}px`};
   bottom: -20px;
   font-size: 9px;
-  color: #000;
+  color: ${({ theme }) => theme.textColor};
 `;
 
 const LowHighLine = styled.div`
@@ -190,7 +192,51 @@ const OpenCloseBar = styled.div`
   }
 `;
 
+const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const SelectTheme = styled.select`
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px;
+  outline: none;
+  background-color: ${({ theme }) => theme.accentColor};
+  color: ${({ theme }) => theme.textColor};
+`;
+
 const ForexTable = () => {
+  const themes = {
+    light: {
+      bgColor: "#F4F4F2",
+      textColor: "#495464",
+      accentColor: "#BBBFCA",
+    },
+
+    dark: {
+      bgColor: "#222831",
+      textColor: "#EEEEEE",
+      accentColor: "#00ADB5",
+    },
+
+    ocean: {
+      bgColor: "#E3FDFD",
+      textColor: "#71C9CE",
+      accentColor: "#A6E3E9",
+    },
+
+    hot: {
+      bgColor: "#F67280",
+      textColor: "#fff",
+      accentColor: "#6C5B7B",
+    },
+  };
+
+  const ThemePreferenceContext = React.createContext();
+  const notificationCtx = useContext(NotificationContext);
+
   const [fileDoc, setFileDoc] = useState([]);
   const [usableData, setUsableData] = useState([]);
   const [compilation, setCompilation] = useState([]);
@@ -203,6 +249,9 @@ const ForexTable = () => {
   const [xAxisPointsDistance, setXAxisPointsDistance] = useState(0);
   const [graph, setGraph] = useState([]);
   const [selectedBar, setSelectedBar] = useState();
+  const [selectedTheme, setSelectedTheme] = useState("light");
+
+  const theme = { ...themes[selectedTheme] };
 
   const convertText = () => {
     let arrayFromText = fileDoc.split(/\r?\n/);
@@ -379,12 +428,19 @@ const ForexTable = () => {
   const handleFileRead = (e) => {
     const content = reader.result;
     setFileDoc(content);
+    notificationCtx.success("Loaded!");
+    setTimeout(() => {
+      notificationCtx.clear();
+    }, 3000);
   };
 
   const fetchData = (file) => {
     reader = new FileReader();
+
     reader.onloadend = handleFileRead;
+
     reader.readAsText(file);
+    notificationCtx.success("Loading...");
   };
   const headers = [
     "DATE",
@@ -395,100 +451,127 @@ const ForexTable = () => {
   ];
 
   return (
-    <Container>
-      <Title>FOREX CHARTS</Title>
-      <Graph>
-        <GraphContainer>
-          {pretty.map((el, idx) => (
-            <YAxisValue
-              key={idx}
-              positionb={valuesAndPoints[idx].pointPosition}
-            >
-              ${valuesAndPoints[idx].value}
-              <YAxisLine />
-            </YAxisValue>
-          ))}
-          {xAxisV.length < 31 &&
-            xAxisV.map((el, idx) => (
-              <XAxisValue key={idx} positionl={xAxis[idx]}>
-                <XAxisLine />
-                {el.value}
-              </XAxisValue>
-            ))}
-          {graph.map((el, idx) => (
-            <div key={idx}>
-              <LowHighLine
-                positionb={
-                  el.low / (lowHighDifferenceValue / 450) -
-                  lowest / (lowHighDifferenceValue / 450)
-                }
-                positionl={xAxis[idx] + xAxisPointsDistance / 2 - 2}
-                lineheight={el.lowHighLineHeightPixels}
-              />
-              <OpenCloseBar
-                widthpixels={xAxisPointsDistance}
-                onMouseEnter={() => {
-                  setSelectedBar(compilation[idx]);
-                }}
-                onMouseLeave={() => {
-                  setSelectedBar();
-                }}
-                barInformation={el}
-                positionb={
-                  el.close > el.open
-                    ? el.open / (lowHighDifferenceValue / 450) -
+    <ThemePreferenceContext.Provider
+      value={{ selectedTheme, setSelectedTheme }}
+    >
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Title>FOREX CHARTS</Title>
+          <Graph>
+            <GraphContainer>
+              {pretty.map((el, idx) => (
+                <YAxisValue
+                  key={idx}
+                  positionb={valuesAndPoints[idx].pointPosition}
+                >
+                  ${valuesAndPoints[idx].value}
+                  <YAxisLine />
+                </YAxisValue>
+              ))}
+              {xAxisV.length < 31 &&
+                xAxisV.map((el, idx) => (
+                  <XAxisValue key={idx} positionl={xAxis[idx]}>
+                    <XAxisLine />
+                    {el.value}
+                  </XAxisValue>
+                ))}
+              {graph.map((el, idx) => (
+                <div key={idx}>
+                  <LowHighLine
+                    positionb={
+                      el.low / (lowHighDifferenceValue / 450) -
                       lowest / (lowHighDifferenceValue / 450)
-                    : el.close / (lowHighDifferenceValue / 450) -
-                      lowest / (lowHighDifferenceValue / 450)
-                }
-                positionl={xAxis[idx]}
-                barheight={
-                  el.openCloseHeightPixels === 0 ? 1 : el.openCloseHeightPixels
-                }
-                color={
-                  el.open > el.close
-                    ? "linear-gradient(105deg, rgba(170,15,41,1) 26%, rgba(173,57,18,1) 74%)"
-                    : "linear-gradient(105deg, rgba(115,180,73,1) 37%, rgba(118,222,82,1) 68%, rgba(71,241,82,1) 99%)"
-                }
-              />
-            </div>
-          ))}
-        </GraphContainer>
-        <InfoSidebar>
-          <p>
-            Date:{" "}
-            {selectedBar &&
-              new Date(selectedBar.date).toLocaleDateString("en-GB")}
-          </p>
-          <p>Low: {selectedBar && selectedBar.low}</p>
-          <p>High: {selectedBar && selectedBar.high}</p>
-          <p>Open: {selectedBar && selectedBar.open}</p>
-          <p>Close: {selectedBar && selectedBar.close}</p>
-        </InfoSidebar>
-      </Graph>
-      <InputFile
-        type="file"
-        onChange={(e) => {
-          fetchData(e.target.files[0]);
-        }}
-      />
-      <FetchDataBtn onClick={convertText}>Open csv</FetchDataBtn>
-      <Table>
-        <TableRow>
-          {headers.map((item, idx) => (
-            <Cell key={idx}>{item}</Cell>
-          ))}
-        </TableRow>
-        {compilation.length > 0 &&
-          compilation.map((row, id) => (
-            <TableRow key={id}>
-              {Object.keys(row).map((cellData, idx) => (
-                <Cell key={idx}>{row[cellData]}</Cell>
+                    }
+                    positionl={xAxis[idx] + xAxisPointsDistance / 2 - 2}
+                    lineheight={el.lowHighLineHeightPixels}
+                  />
+                  <OpenCloseBar
+                    widthpixels={xAxisPointsDistance}
+                    onMouseEnter={() => {
+                      setSelectedBar(compilation[idx]);
+                    }}
+                    onMouseLeave={() => {
+                      setSelectedBar();
+                    }}
+                    barInformation={el}
+                    positionb={
+                      el.close > el.open
+                        ? el.open / (lowHighDifferenceValue / 450) -
+                          lowest / (lowHighDifferenceValue / 450)
+                        : el.close / (lowHighDifferenceValue / 450) -
+                          lowest / (lowHighDifferenceValue / 450)
+                    }
+                    positionl={xAxis[idx]}
+                    barheight={
+                      el.openCloseHeightPixels === 0
+                        ? 1
+                        : el.openCloseHeightPixels
+                    }
+                    color={
+                      el.open > el.close
+                        ? "linear-gradient(105deg, rgba(170,15,41,1) 26%, rgba(173,57,18,1) 74%)"
+                        : "linear-gradient(105deg, rgba(115,180,73,1) 37%, rgba(118,222,82,1) 68%, rgba(71,241,82,1) 99%)"
+                    }
+                  />
+                </div>
+              ))}
+            </GraphContainer>
+            <Sidebar>
+              <InfoSidebar>
+                <p>
+                  Date:{" "}
+                  {selectedBar &&
+                    new Date(selectedBar.date).toLocaleDateString("en-GB")}
+                </p>
+                <p>Low: {selectedBar && selectedBar.low}</p>
+                <p>High: {selectedBar && selectedBar.high}</p>
+                <p>Open: {selectedBar && selectedBar.open}</p>
+                <p>Close: {selectedBar && selectedBar.close}</p>
+              </InfoSidebar>
+              <label for="themes" style={{ color: theme.textColor }}>
+                Choose a theme:
+              </label>
+              <SelectTheme
+                id="themes"
+                name="themes"
+                value={selectedTheme}
+                onChange={(e) => {
+                  setSelectedTheme(e.target.value);
+                }}
+              >
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="ocean">Ocean</option>
+                <option value="hot">Hot</option>
+              </SelectTheme>
+            </Sidebar>
+          </Graph>
+          <InputFile
+            type="file"
+            accept=".csv"
+            onChange={(e) => {
+              fetchData(e.target.files[0]);
+            }}
+          />
+          <FetchDataBtn onClick={convertText}>Open csv</FetchDataBtn>
+          <Table>
+            <TableRow>
+              {headers.map((item, idx) => (
+                <Cell key={idx}>{item}</Cell>
               ))}
             </TableRow>
-          ))}
-      </Table>
-    </Container>
+            {compilation.length > 0 &&
+              compilation.map((row, id) => (
+                <TableRow key={id}>
+                  {Object.keys(row).map((cellData, idx) => (
+                    <Cell key={idx}>{row[cellData]}</Cell>
+                  ))}
+                </TableRow>
+              ))}
+          </Table>
+        </Container>
+      </ThemeProvider>
+    </ThemePreferenceContext.Provider>
   );
 };
 

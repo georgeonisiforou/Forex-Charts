@@ -3,6 +3,8 @@ import Image from "next/image";
 
 import styles from "@/styles/Home.module.css";
 import ForexTable from "@/components/ForexTable";
+import { NotificationProvider } from "@/components/NotificationProvider";
+import Notification from "@/components/Notification";
 
 export default function Home() {
   return (
@@ -13,7 +15,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ForexTable />
+      <NotificationProvider>
+        <Notification />
+        <ForexTable />
+      </NotificationProvider>
     </>
   );
 }
